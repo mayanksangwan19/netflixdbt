@@ -1,0 +1,7 @@
+version: 2
+
+models:
+  - name: int_movie_genres
+    description: >
+      Intermediate table that explodes multi-valued movie genres
+      into one row per movie and genre.

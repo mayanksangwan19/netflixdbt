@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: dim_movies
+    description: >
+      Dimension table containing movie attributes.
+      One row per movie.
+
+  - name: dim_genres
+    description: >
+      Snowflaked dimension table for movie genres.
+      One row per genre.
+
+  - name: fct_ratings
+    description: >
+      Fact table containing movie rating events.
+      Grain: one row per user per movie per rating event.
+    columns:
+      - name: rating_sk
+        description: Surrogate key for a rating event
+        tests:
+          - not_null
+          - unique
+
+  - name: fct_genome_scores
+    description: >
+      Fact table containing relevance scores between movies and tags.
+      Grain: one row per movie per tag.

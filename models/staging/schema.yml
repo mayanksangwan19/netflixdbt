@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: stg_movies
+    description: >
+      Staging table for raw movie data.
+      One row per movie from the source system.
+    columns:
+      - name: movie_id
+        description: Unique identifier for a movie
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_ratings
+    description: >
+      Staging table for user ratings.
+      One row per user, movie, and rating timestamp.
