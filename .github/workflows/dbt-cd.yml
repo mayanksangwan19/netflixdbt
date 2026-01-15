@@ -1,0 +1,53 @@
+name: dbt CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  dbt-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dbt
+        run: pip install dbt-snowflake==1.7.5
+
+      - name: Create profiles.yml
+        run: |
+          mkdir -p ~/.dbt
+          cat << EOF > ~/.dbt/profiles.yml
+          netflixdbt:
+            target: prod
+            outputs:
+              prod:
+                type: snowflake
+                account: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+                user: ${{ secrets.SNOWFLAKE_USER }}
+                password: ${{ secrets.SNOWFLAKE_PASSWORD }}
+                role: ${{ secrets.SNOWFLAKE_ROLE }}
+                database: PROD
+                warehouse: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+                schema: MARTS
+                threads: 4
+          EOF
+
+      - name: dbt deps
+        run: dbt deps
+
+      - name: dbt run
+        run: dbt run
+
+      - name: dbt snapshot
+        run: dbt snapshot
+
+      - name: dbt test
+        run: dbt test
+
+      - name: dbt docs generate
+        run: dbt docs generate
