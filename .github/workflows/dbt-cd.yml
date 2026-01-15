@@ -1,5 +1,4 @@
 name: dbt CD
-
 on:
   push:
     branches: [ "main" ]
