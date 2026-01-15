@@ -23,7 +23,7 @@ This project follows **real industry practices**, not tutorial shortcuts.
 
 ### End-to-End Flow
 
-Source Data (MovieLens CSVs / API) → Snowflake RAW Layer → dbt Staging Models (Views) → dbt Intermediate Models (Views) → dbt Marts (Facts & Dimensions - Tables) →
+Source Data (MovieLens CSVs / API) → Snowflake RAW Layer → dbt Staging Models (Views) → dbt Intermediate Models (Views) → dbt Marts (Facts & Dimensions - Tables)
  → Snapshots (SCD Type-2 History) → Analytics Consumption (Snowflake SQL / BI Tools)
 
 
